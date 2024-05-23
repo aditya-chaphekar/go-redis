@@ -23,7 +23,6 @@ func main() {
 	buff := make([]byte, 1024)
 	length, err := connection.Read(buff)
 	returnBuff := []byte("+PONG\r\n")
-	connection.Write(returnBuff)
 	for i := 0; i <= length; i++ {
 		if string(buff[i]) == "\n" {
 			connection.Write(returnBuff)
