@@ -20,13 +20,17 @@ func main() {
 		fmt.Println("Error Accepting Connection")
 		os.Exit(1)
 	}
-	buff := make([]byte, 1024)
-	length, err := connection.Read(buff)
-	returnBuff := []byte("+PONG\r\n")
-	for i := 0; i <= length; i++ {
-		if string(buff[i]) == "\n" {
-			connection.Write(returnBuff)
+	buffer := make([]byte, 1024)
+	for {
+		_, err = connection.Read(buffer)
+		if err != nil {
+			fmt.Println("Error reading from connection")
+			os.Exit(1)
+		}
+		_, err = connection.Write([]byte("+PONG\r\n"))
+		if err != nil {
+			fmt.Println("Error writing to connection")
+			os.Exit(1)
 		}
 	}
-
 }
